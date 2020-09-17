@@ -1,0 +1,11 @@
+default: &default
+  client-id: <%= ENV.fetch("GOOGLE_CLIENT_ID") %>
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   scope :api do
     namespace :v1 do
+      post '/sessions', to: 'session#login'
+      delete '/sessions', to: 'session#logout'
+      get '/sessions', to: 'session#refresh'
       post '/users', to: 'user#create'
     end
   end
