@@ -37,5 +37,7 @@ module ChatBackend
     config.google = config_for(:google)
 
     config.logger = Logger.new(STDOUT)
+
+    config.redis = config_for(:redis)
   end
 end
