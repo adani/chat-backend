@@ -1,5 +1,7 @@
 module V1
   class SessionController < ApplicationController
+    before_action :authenticate, except: :login
+
     require 'google-id-token'
     require 'redis'
 
@@ -13,6 +15,7 @@ module V1
         end
         redis.set("session:#{google_user['sub']}", params[:token])
         response.set_cookie(:user_id, value: user.id, path: '/')
+        response.set_cookie(:jwt, value: params[:token], path: '/')
         render json: google_user
       rescue GoogleIDToken::ValidationError => e
         render json: { error: e }
