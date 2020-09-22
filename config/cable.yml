@@ -1,5 +1,7 @@
 development:
-  adapter: async
+  adapter: redis
+  url: <%= "redis://#{ENV.fetch("REDIS_HOST")}:#{ENV.fetch("REDIS_PORT")}/1" %>
+  channel_prefix: chat_backend_dev
 
 test:
   adapter: test

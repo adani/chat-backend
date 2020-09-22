@@ -2,12 +2,6 @@ class ChatChannel < ApplicationCable::Channel
   def subscribed
     @room_id = params[:room_id]
     stream_from room_stream
-    messages = Message.select('users.username as sender, messages.content, messages.created_at')
-                      .joins(:chatroom, :user)
-                      .where('chatrooms.id = ?', @room_id)
-                      .last(10)
-                      .as_json(except: :id)
-    ActionCable.server.broadcast(room_stream, { type: 'initialize', payload: messages })
   end
 
   def unsubscribed

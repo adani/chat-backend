@@ -5,6 +5,7 @@ Rails.application.routes.draw do
       delete '/sessions', to: 'session#logout'
       get '/sessions', to: 'session#refresh'
       post '/users', to: 'user#create'
+      get '/chatroom/:id/online_users', to: 'chatroom#get_online_users'
     end
   end
 
