@@ -2,8 +2,7 @@ Rails.application.routes.draw do
   scope :api do
     namespace :v1 do
       post '/sessions', to: 'session#login'
-      delete '/sessions', to: 'session#logout'
-      get '/sessions', to: 'session#refresh'
+      delete '/sessions/*id', to: 'session#logout', format: false
       post '/users', to: 'user#create'
       get '/chatroom/:id/online_users', to: 'chatroom#get_online_users'
     end

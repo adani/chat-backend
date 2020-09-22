@@ -1,0 +1,26 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    volumes:
+      - /usr/tmp/chatapp/db:/var/lib/postgresql/data:Z
+    environment:
+      POSTGRES_PASSWORD: password
+  redis:
+    image: redis
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -e production"
+    volumes:
+      - .:/myapp
+    environment:
+      GOOGLE_CLIENT_ID: "${GOOGLE_CLIENT_ID}"
+      REDIS_HOST: redis
+      REDIS_PORT: "6379"
+      REDIS_URL: redis://redis:6379/1
+      RAILS_ENV: "production"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+      - redis

@@ -23,15 +23,14 @@ module V1
     end
 
     def logout
-    end
-
-    def refresh
-    end
-
-    private
-
-    def redis
-      Redis.current
+      Rails.logger.debug("authenticated JWT: #{jwt}")
+      if jwt == params[:id]
+        redis.del("session:#{current_user.google_user_id}")
+        response.delete_cookie :user_id
+        response.delete_cookie :jwt
+      else
+        head :forbidden
+      end
     end
   end
 end
